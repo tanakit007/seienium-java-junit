@@ -8,25 +8,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.jupiter.api.Disabled;
-import java.time.Duration;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-class LoginTest {
+class AuthTest {
 
     private WebDriver driver;
 
     @BeforeEach
     void setUp() {
-        ChromeOptions options = new ChromeOptions();
-            if (Boolean.getBoolean("headless")) {
-            options.addArguments("--headless=new");
-            options.addArguments("--window-size=1920,1080");
-            }
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
     }
-    
 
     @AfterEach
     void tearDown() {
@@ -70,15 +60,8 @@ class LoginTest {
     void shouldLoginRequirPassword() {
         driver.get("https://seleniumbase.io/simple/login");
 
-        WebDriverWait wait = new WebDriverWait(
-        driver,
-        Duration.ofSeconds(10)
-        );
-        wait.until(
-        ExpectedConditions.visibilityOfElementLocated(
-            By.id("username")
-        )
-            ).sendKeys("demo_user");
+        driver.findElement(By.id("username"))
+              .sendKeys("demo_user");
 
         driver.findElement(By.id("log-in"))
               .click();
